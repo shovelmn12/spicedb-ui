@@ -18,7 +18,7 @@ A modern web interface for managing SpiceDB authorization systems. Built with Ne
 
 1. **Clone and install**
    ```bash
-   git clone <your-repo>
+   git clone https://github.com/mejaz/spicedb-ui.git
    cd spicedb-ui
    npm install
    ```

@@ -1,40 +1,146 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# SpiceDB UI
 
-## Getting Started
+A modern web interface for managing SpiceDB authorization systems. Built with Next.js and Tailwind CSS.
 
-First, run the development server:
+## Features
+
+- **Dashboard** - Real-time overview of your SpiceDB instance with stats and activity
+- **Schema Management** - Visual and text-based schema editor with validation
+- **Relationship Management** - CRUD operations with smart dropdowns and search
+- **Authorization Testing** - Permission checks, expansions, and subject lookups
+
+## Prerequisites
+
+- Node.js 16+
+- Running SpiceDB instance (HTTP API enabled)
+
+## Quick Start
+
+1. **Clone and install**
+   ```bash
+   git clone <your-repo>
+   cd spicedb-ui
+   npm install
+   ```
+
+2. **Start SpiceDB with HTTP API**
+   ```bash
+   docker run -d --rm -p 50051:50051 -p 8080:8080 \
+     authzed/spicedb serve \
+     --grpc-preshared-key "your-token-here" \
+     --http-enabled
+   ```
+
+3. **Configure environment**
+   ```bash
+   # Create .env.local
+   SPICEDB_URL=http://localhost:8080
+   SPICEDB_TOKEN=your-token-here
+   ```
+
+4. **Start the UI**
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000)
+
+## Configuration
+
+Environment variables in `.env.local`:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+SPICEDB_URL=http://localhost:8080    # SpiceDB HTTP API endpoint
+SPICEDB_TOKEN=your-token-here        # Pre-shared key for authentication
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### 1. Schema Management
+- Navigate to **Schema** page
+- Edit your authorization model using SpiceDB schema language
+- Use the visual view to see parsed namespaces, relations, and permissions
+- Save changes directly to SpiceDB
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### 2. Relationship Management
+- Go to **Relationships** page
+- Add relationships using smart dropdowns:
+    - **Resource**: Search existing or create new (e.g., `business:acme-corp`)
+    - **Relation**: Auto-populated from your schema (e.g., `owner`, `manager`)
+    - **Subject**: Manual entry (e.g., `user:alice`)
+- View, search, and filter existing relationships
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### 3. Authorization Testing
+- Use **Check** page for permission testing:
+    - **Permission Check**: Test if a subject has permission on a resource
+    - **Expand Permission**: Visualize permission trees
+    - **Lookup Subjects**: Find all subjects with a specific permission
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Example Schema
 
-To learn more about Next.js, take a look at the following resources:
+```javascript
+definition user {}
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+definition business {
+  relation owner: user
+  relation manager: user
+  relation read_access: user
+  
+  permission issue_invoices = owner + manager
+  permission view_invoice_list = read_access + owner + manager
+  permission modify_invoices = owner + manager
+}
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+definition system {
+  relation admin: user
+  permission global_admin = admin
+}
+```
 
-## Deploy on Vercel
+## API Endpoints
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The UI creates several API routes:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- `GET /api/spicedb/stats` - Dashboard statistics
+- `GET /api/spicedb/health` - Connection health check
+- `GET /api/spicedb/activity` - Recent activity feed
+- `GET /api/spicedb/resources` - Available resources and relations
+- `GET|POST /api/spicedb/schema` - Schema management
+- `GET|POST|DELETE /api/spicedb/relationships` - Relationship CRUD
+- `POST /api/spicedb/check` - Permission checking
+- `POST /api/spicedb/expand` - Permission expansion
+- `POST /api/spicedb/lookup-subjects` - Subject lookup
+
+## Tech Stack
+
+- **Frontend**: Next.js 13+, React, Tailwind CSS
+- **Backend**: Next.js API routes
+- **Database**: SpiceDB (via HTTP API)
+- **Styling**: Tailwind CSS with custom components
+
+## Development
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm start        # Start production server
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test with your local SpiceDB instance
+5. Submit a pull request
+
+## License
+
+MIT
+
+## Links
+
+- [SpiceDB Documentation](https://authzed.com/docs)
+- [SpiceDB GitHub](https://github.com/authzed/spicedb)
+- [Next.js Documentation](https://nextjs.org/docs)

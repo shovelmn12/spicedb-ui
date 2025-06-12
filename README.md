@@ -2,14 +2,41 @@
 
 A modern web interface for managing SpiceDB authorization systems. Built with Next.js and Tailwind CSS.
 
-<p align="center">
-  <img src="snaps/dashboard.jpg" width="300">
-  <img src="snaps/schema.jpg" width="300">
-  <img src="snaps/relationships.jpg" width="300">
-  <img src="snaps/permissions.jpg" width="300">
-  <img src="snaps/permissions-bulk.jpg" width="300">
-  <img src="snaps/auth-expand.jpg" width="300">
-</p>
+## Screenshots
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="snaps/dashboard.jpg" width="350" alt="Dashboard">
+        <br><em>Dashboard</em>
+      </td>
+      <td align="center">
+        <img src="snaps/schema.jpg" width="350" alt="Schema View">
+        <br><em>Schema Management</em>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="snaps/relationships.jpg" width="350" alt="Relationships">
+        <br><em>Entity Relationships</em>
+      </td>
+      <td align="center">
+        <img src="snaps/permissions.jpg" width="350" alt="Permissions">
+        <br><em>Permission Management</em>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="snaps/permissions-bulk.jpg" width="350" alt="Bulk Permissions">
+        <br><em>Bulk Operations</em>
+      </td>
+      <td align="center">
+        <img src="snaps/auth-expand.jpg" width="350" alt="Authentication">
+        <br><em>Authentication Details</em>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ## Features
 
@@ -53,6 +80,57 @@ A modern web interface for managing SpiceDB authorization systems. Built with Ne
    ```
 
    Open [http://localhost:3000](http://localhost:3000)
+
+### Run with Docker
+
+1. **Build the Docker image**
+   ```bash
+   docker build -t spicedb-ui .
+   ```
+
+2. **Configure environment variables**
+
+   Create a `.env` file in the project root:
+   ```bash
+   # .env
+   SPICEDB_URL=http://host.docker.internal:8080
+   SPICEDB_TOKEN=your-token-here
+   ```
+
+   > **Note**: Use `host.docker.internal` to connect to services running on your host machine from within the Docker container.
+
+3. **Run the container**
+   ```bash
+   docker run --env-file .env -p 3000:3000 spicedb-ui
+   ```
+
+4. **Access the application**
+
+   Open your browser and navigate to `http://localhost:3000`
+
+---
+
+**Alternative: Using Docker Compose**
+
+For easier management, you can also use Docker Compose:
+
+```yaml
+# docker-compose.yml
+version: '3.8'
+services:
+  spicedb-ui:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - SPICEDB_URL=http://host.docker.internal:8080
+      - SPICEDB_TOKEN=your-token-here
+```
+
+Then run:
+```bash
+docker-compose up --build
+```
 
 ## Configuration
 

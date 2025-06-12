@@ -2,6 +2,15 @@
 
 A modern web interface for managing SpiceDB authorization systems. Built with Next.js and Tailwind CSS.
 
+<p align="center">
+  <img src="snaps/dashboard.jpg" width="300">
+  <img src="snaps/schema.jpg" width="300">
+  <img src="snaps/relationships.jpg" width="300">
+  <img src="snaps/permissions.jpg" width="300">
+  <img src="snaps/permissions-bulk.jpg" width="300">
+  <img src="snaps/auth-expand.jpg" width="300">
+</p>
+
 ## Features
 
 - **Dashboard** - Real-time overview of your SpiceDB instance with stats and activity

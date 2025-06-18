@@ -61,7 +61,7 @@ A modern web interface for managing SpiceDB authorization systems. Built with Ne
 
 2. **Start SpiceDB with HTTP API**
    ```bash
-   docker run -d --rm -p 50051:50051 -p 8080:8080 \
+   docker run -d --rm -p 50051:50051 -p 8443:8443 \
      authzed/spicedb serve \
      --grpc-preshared-key "your-token-here" \
      --http-enabled
@@ -70,7 +70,7 @@ A modern web interface for managing SpiceDB authorization systems. Built with Ne
 3. **Configure environment**
    ```bash
    # Create .env.local
-   SPICEDB_URL=http://localhost:8080
+   SPICEDB_URL=http://localhost:8443
    SPICEDB_TOKEN=your-token-here
    ```
 
@@ -93,7 +93,7 @@ A modern web interface for managing SpiceDB authorization systems. Built with Ne
    Create a `.env` file in the project root:
    ```bash
    # .env
-   SPICEDB_URL=http://host.docker.internal:8080
+   SPICEDB_URL=http://host.docker.internal:8443
    SPICEDB_TOKEN=your-token-here
    ```
 
@@ -123,7 +123,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - SPICEDB_URL=http://host.docker.internal:8080
+      - SPICEDB_URL=http://host.docker.internal:8443
       - SPICEDB_TOKEN=your-token-here
 ```
 
@@ -137,7 +137,7 @@ docker-compose up --build
 Environment variables in `.env.local`:
 
 ```bash
-SPICEDB_URL=http://localhost:8080    # SpiceDB HTTP API endpoint
+SPICEDB_URL=http://localhost:8443    # SpiceDB HTTP API endpoint
 SPICEDB_TOKEN=your-token-here        # Pre-shared key for authentication
 ```
 

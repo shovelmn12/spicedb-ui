@@ -10,13 +10,12 @@ export default async function handler(req, res) {
         const startTime = Date.now();
 
         // Test basic connectivity with schema read
-        const response = await fetch(`${spicedbUrl}/v1/schema/read`, {
-            method: 'POST',
+        const response = await fetch(`${spicedbUrl}/healthz`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify({})
+            }
         });
 
         const endTime = Date.now();

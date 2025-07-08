@@ -59,19 +59,6 @@ const Layout = ({ children }) => {
                         ))}
                     </div>
                 </nav>
-
-                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
-                    <div className="text-xs text-gray-500">
-                        <div className="flex items-center justify-between mb-2">
-                            <span>Connection Status:</span>
-                            <div className="flex items-center">
-                                <div className="w-2 h-2 bg-green-400 rounded-full mr-1"></div>
-                                <span className="text-green-600">Connected</span>
-                            </div>
-                        </div>
-                        <div className="text-gray-400">localhost:50051</div>
-                    </div>
-                </div>
             </div>
 
             {/* Main content */}

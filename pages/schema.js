@@ -9,38 +9,6 @@ const Schema = () => {
     const [success, setSuccess] = useState('');
     const [namespaces, setNamespaces] = useState([]);
 
-    // Mock schema data - replace with actual SpiceDB API calls
-    const mockSchema = `definition user {}
-
-definition organization {
-  relation admin: user
-  relation member: user
-
-  permission admin_access = admin
-  permission member_access = member + admin
-}
-
-definition document {
-  relation owner: user
-  relation editor: user
-  relation viewer: user | organization#member
-
-  permission edit = owner + editor
-  permission view = viewer + edit
-  permission delete = owner
-}
-
-definition folder {
-  relation owner: user
-  relation editor: user
-  relation viewer: user | organization#member
-  relation parent: folder
-
-  permission edit = owner + editor
-  permission view = viewer + edit + parent->view
-  permission delete = owner
-}`;
-
     useEffect(() => {
         // Load current schema
         loadSchema();
